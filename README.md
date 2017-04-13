@@ -1,12 +1,17 @@
-### Hydrological Emulator (HE) - Version 1
+﻿### Hydrological Emulator (HE) - Version 1
 
 #### NOTICE
 This repository uses Git Large File Storage (LFS).  Please run the following before cloning this repository:  **git lfs install**
 
 #### About
+The hydrological emulator was built upon the monthly “abcd” model, which was first introduced to improve the national water assessment for the U.S., with a simple analytical framework using only a few descriptive parameters. The model uses potential evapotranspiration (PET) and precipitation (P) as input. The model defines four parameters a, b, c, and d that reflect regime characteristics to simulate water fluxes (e.g., evapotranspiration, runoff, groundwater recharge) and pools (e.g., soil moisture, groundwater). The parameters a and b pertain to runoff characteristics, and c and d relate to groundwater. Specifically, the parameter a reflects the propensity of runoff to occur before the soil is fully saturated. The parameter b is an upper limit on the sum of evapotranspiration (ET) and soil moisture storage. The parameter c indicates the degree of recharge to groundwater and is related to the fraction of mean runoff that arises from groundwater discharge. The parameter d is the release rate of groundwater to baseflow, and thus the reciprocal of d is the groundwater residence time. Snow is not part of the original “abcd” model, here we leverage the work of Martinez and Gupta (2010) which added snow processes into the original “abcd” model, where the snowpack accumulation and snow melt are estimated based on air temperature.  
+
+We adopt the “abcd” framework from Martinez and Gupta (2010); meanwhile, we make three modifications. First, instead of involving three snow parameters in the parameterization process, we adapt parameter values for two of the parameters (i.e., temperature threshold above or below which all precipitation falls as rainfall or snow) from literature and only keep a tunable parameter m – snow melt coefficient (0 < m < 1), in order to enhance the model efficiency with as least necessary parameters as possible. Second, we introduce the baseflow index (BFI) into the parameterization process to improve the partition of total runoff between the direct runoff and baseflow. Third, other than the lumped scheme as previous studies used, we first explore the values of model application in distributed scheme with a grid resolution of 0.5 degree. The detailed model descriptions and equations are presented in Liu et al. (in review). 
 
 
 #### Reference
+Liu, Y., Hejazi, M.I., Li, H., Zhang, X., Leng, G., A Hydrological Emulator for Global Applications, Geoscientific Model Development (in review)
+Martinez, G.F., Gupta, H.V., 2010. Toward improved identification of hydrological models: A diagnostic evaluation of the “abcd” monthly water balance model for the conterminous United States. Water Resources Research, 46(8).
 
 
 #### Content
