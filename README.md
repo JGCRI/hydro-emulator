@@ -6,41 +6,41 @@
 
 **Table of Contents**
 
-1\. Overview of the HE 2
+1\. Overview of the HE
 
-2\. Structure of the HE 3
+2\. Structure of the HE
 
-3\. Emulation by using the HE 4
+3\. Emulation by using the HE
 
-4\. Main source codes 5
+4\. Main source codes
 
-&nbsp;&nbsp;&nbsp;&nbsp;4.1 Codes tree of main programs 5
+&nbsp;&nbsp;&nbsp;&nbsp;4.1 Codes tree of main programs
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1.1 Calibration process 5
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1.1 Calibration process
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1.2 Validation process 6
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1.2 Validation process
 
-&nbsp;&nbsp;&nbsp;&nbsp;4.2 Codes and data availability 7
+&nbsp;&nbsp;&nbsp;&nbsp;4.2 Codes and data availability
 
-5\. Input data 7
+5\. Input data
 
-&nbsp;&nbsp;&nbsp;&nbsp;5.1 Climate data 7
+&nbsp;&nbsp;&nbsp;&nbsp;5.1 Climate data
 
-&nbsp;&nbsp;&nbsp;&nbsp;5.2 Benchmark runoff product 8
+&nbsp;&nbsp;&nbsp;&nbsp;5.2 Benchmark runoff product
 
-&nbsp;&nbsp;&nbsp;&nbsp;5.3 Baseflow Index (BFI) 9
+&nbsp;&nbsp;&nbsp;&nbsp;5.3 Baseflow Index (BFI)
 
-&nbsp;&nbsp;&nbsp;&nbsp;5.4 Input data organization 9
+&nbsp;&nbsp;&nbsp;&nbsp;5.4 Input data organization
 
-6\. Output data 11
+6\. Output data
 
-&nbsp;&nbsp;&nbsp;&nbsp;6.1 Differences in the outputs from calibration and validation 11
+&nbsp;&nbsp;&nbsp;&nbsp;6.1 Differences in the outputs from calibration and validation
 
-&nbsp;&nbsp;&nbsp;&nbsp;6.2 Output data organization 11
+&nbsp;&nbsp;&nbsp;&nbsp;6.2 Output data organization
 
-7\. How to run the HE 14
+7\. How to run the HE
 
-Reference 15
+8\. References
 
 ## Overview of the HE
 
@@ -50,47 +50,35 @@ The HE is constructed based on the version of the *“abcd”* model with incorp
 
 In general, the distributed and lumped schemes of the HE have comparably good capability in simulating spatial and temporal variations of the water balance components (e.g., total runoff, direct runoff, baseflow, evapotranspiration). Meanwhile, the distributed scheme has slightly better performance than the lumped one (e.g., capturing spatial heterogeneity), and also provides grid-level estimates that the lumped scheme does not provide. Additionally, the distributed scheme performs better in extreme climate regimes (e.g., Arctic, North Africa) and Europe. However, the distributed scheme incurs two orders of magnitudes higher computation cost as compared to the lumped scheme. Therefore, the lumped scheme could be an appropriate HE – reasonable predictability and high computational efficiency. At the same time, the distributed scheme could be a suitable alternative for research questions that hinge on grid-level spatial heterogeneity. In terms of recommendations for using the HE, the users are referred to Section 3.4 in Liu et al. (2017).
 
-# Structure of the HE
+## Structure of the HE
 
 We include both a lumped and distributed scheme in the HE for the user’s choice. Both schemes are implemented in a monthly time step. In the lumped scheme, each of the global 235 river basins is lumped as a single unit, and each of the climate inputs represent the lumped average across the entire basin, and thus all the model outputs are lumped as well. In terms of the distributed one, each 0.5-degree grid cell has its own input data, and likewise, the model outputs are simulated at the grid-level. Although the two schemes differ in the spatial resolution of their inputs and outputs, their within-basin parameters are uniform. Note that lateral flows between grid cells and basins are not included at this stage for the HE.
 
-# Emulation by using the HE
+## Emulation by using the HE
 
 The emulation of GHMs by using the HE is mainly achieved by calibrating and validating the HE against the target GHMs. To improve the accuracy of the simulated total runoff and the partition between direct runoff and baseflow, the baseflow index (BFI) is introduced into the objective function during the calibration process. On one side, we maximize Kling-Gupta efficiency (KGE) (Gupta et al., 2009), which is used as a metric to measure the accuracy of the simulated total runoff relative to the benchmark runoff. On the other side, we also nudge the simulated BFI towards the benchmark BFI (here we treat the benchmark BFI as the observed) – the mean BFI of the four products from (Beck et al., 2013). We then conduct parameter optimization by utilizing a Genetic Algorithm (GA) routine (Deb et al., 2002). Details on the objective function and the equations used in the model calibration process can be found in Section 2.4 of Liu et al. (2017).
 
 It is worthwhile to mention that we use the variable infiltration capacity (VIC) model as an example to illustrate the capability of the HE in emulating GHMs in this version of HE documented here, and thus the runoff product from the VIC model is used as the benchmark runoff that the HE is calibrated and validated against. However, the use of the HE is not tied to the VIC model, users can utilize the framework of the HE with any alternative input climate data and benchmark data of water budgets (e.g., runoff, evapotranspiration (ET)), and recalibrate and revalidate the HE to emulate other complex GHMs of interest, to meet their own needs. For example, if one user wants to emulate the ET estimates of the Community Land Model (CLM), the user can use the CLM ET product (or both the ET and runoff products) as the benchmark product and replace runoff with ET in the objective function (or add ET into the objective function by employing multi-objective approach) to achieve their goal.
 
-# Main source codes
+## Main source codes
 
-## 4.1 Codes tree of main programs
+### 4.1 Codes tree of main programs
 
 The main codes include the calibration and validation of the HE as detailed below. The two schemes can be run independently based on user’s needs. The validation relies on the calibration and it takes the calibrated parameters from the calibration process as inputs for the validation. The validation evaluates the effectiveness of the HE in reproducing the target GHM being emulated.
 
-### 4.1.1 Calibration process
+#### 4.1.1 Calibration process
 
-[]{#_Toc378706663 .anchor}**Table 1: The code tree of main programs for calibration**
+**Table 1: The code tree of main programs for calibration**
+**(calibration/lump/ or calibration/dist/ directory)**
 
-[]{#_Toc378706664 .anchor}**(calibration/lump/ or calibration/dist/ directory)**
-
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-  Source code file name        Role of each code file
-  ---------------------------- ------------------------------------------------- --------------------------------------------------------------------------------------------------------------
-  Main\_HE\_cal\_lump.m                                                          Main program that calls other functions for calibration, evaluation and saving variables
-
-  (or Main\_HE\_cal\_dist.m)                                                     
-
-                               abcd.m                                            Function for calculating water budgets, and it takes input data and yields output of water fluxes and pools.
-
-                               snowpartition.m                                   Function for partitioning precipitation between rainfall and snow
-
-                               ObjFun\_abcd\_lump.m, (or ObjFun\_abcd\_dist.m)   Objective function
-
-                               KGE.m                                             Function for calculating Kling-Gupta efficiency
-
-                               Calibration\_lump.m (or Calibration\_dist.m)      Function for calibrating the HE against the target model being emulated to get basin-specific parameters
-  ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-[[]{#_Toc378706866 .anchor}]{#_Toc378706665 .anchor}
+| Source code file name | Role of each code file |
+|-----------------------|------------------------|
+| Main\_HE\_cal\_lump.m (or Main\_HE\_cal\_dist.m)| Main program that calls other functions for calibration, evaluation and saving variables |                                                  
+| abcd.m | Function for calculating water budgets, and it takes input data and yields output of water fluxes and pools |
+| snowpartition.m | Function for partitioning precipitation between rainfall and snow |
+| ObjFun\_abcd\_lump.m (or ObjFun\_abcd\_dist.m) | Objective function |
+| KGE.m | Function for calculating Kling-Gupta efficiency |
+| Calibration\_lump.m (or Calibration\_dist.m) | Function for calibrating the HE against the target model being emulated to get basin-specific parameters |
 
 The code trees for the HE calibration are shown in Table 1. The main program consists of the main executable (Main\_HE\_cal.m), water budget calculation (abcd.m), snow partition (snowpartition.m), objective function (ObjFun\_abcd\_lump.m or ObjFun\_abcd\_dist.m), Kling-Gupta efficiency calculation (KGE.m), and implementation of calibration (Calibration\_lump.m or Calibration\_dist.m). The main executable file (Main\_HE\_cal.m) calls other functions.
 
