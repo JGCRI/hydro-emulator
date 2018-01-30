@@ -86,7 +86,7 @@ The code trees for the HE calibration are shown in Table 1. The main program con
 
 The code trees of the HE validation are shown in Table 2. Similar to the calibration process, the main program for validation consists of the main executable (Main\_HE\_val.m) that calls other functions, water budget calculation (abcd.m), snow partition (snowpartition.m), Kling-Gupta efficiency calculation (KGE.m), and implementation of validation (Validation\_lump.m or Validation\_dist.m).
 
-**Table 2: The code tree of main programs for validation **
+**Table 2: The code tree of main programs for validation**
 **(validation/lump/ or validation/dist/ directory)**
 
 | Source code file name | Role of each code file |
@@ -148,7 +148,7 @@ Figure 1 presents the example of input data in the structure array “WATCH\_bas
 | Robs | Observed runoff (benchmark) | Grid- and month-specific|
 
 
-## 6.Output data
+## 6. Output data
 
 ### 6.1 Differences in the outputs from calibration and validation
 
@@ -199,7 +199,7 @@ For example, if run the main program for the calibration process using the distr
 
 After the running is finished through either way, all related output data will be saved in the current working directory.
 
-## 8. Reference
+## 8. References
 
 Beck, H.E. et al., 2013. Global patterns in base flow index and recession based on streamflow observations from 3394 catchments. Water Resour. Res., 49(12): 7843-7863.
 
