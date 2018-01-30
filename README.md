@@ -14,38 +14,35 @@
 
 4\. Main source codes 5
 
-&nbsp;4.1 Codes tree of main programs 5
+&nbsp;&nbsp;&nbsp;&nbsp;4.1 Codes tree of main programs 5
 
-&nbsp;&nbsp;4.1.1 Calibration process 5
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1.1 Calibration process 5
 
-&nbsp;&nbsp;4.1.2 Validation process 6
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;4.1.2 Validation process 6
 
-&nbsp;4.2 Codes and data availability 7
+&nbsp;&nbsp;&nbsp;&nbsp;4.2 Codes and data availability 7
 
 5\. Input data 7
 
-5.1 Climate data 7
+&nbsp;&nbsp;&nbsp;&nbsp;5.1 Climate data 7
 
-5.2 Benchmark runoff product 8
+&nbsp;&nbsp;&nbsp;&nbsp;5.2 Benchmark runoff product 8
 
-5.3 Baseflow Index (BFI) 9
+&nbsp;&nbsp;&nbsp;&nbsp;5.3 Baseflow Index (BFI) 9
 
-5.4 Input data organization 9
+&nbsp;&nbsp;&nbsp;&nbsp;5.4 Input data organization 9
 
 6\. Output data 11
 
-6.1 Differences in the outputs from calibration and validation 11
+&nbsp;&nbsp;&nbsp;&nbsp;6.1 Differences in the outputs from calibration and validation 11
 
-6.2 Output data organization 11
+&nbsp;&nbsp;&nbsp;&nbsp;6.2 Output data organization 11
 
 7\. How to run the HE 14
 
 Reference 15
 
-**\
-**
-
-# Overview of the HE
+## Overview of the HE
 
 The hydrological emulator (HE) is an open-source and easy-to-use tool that can efficiently mimic complex global hydrological models (GHMs). The HE is featured by: 1) minimum number (only 5) of parameters; 2) minimal climate input that is easy to acquire; 3) simple model structure; 4) reasonable model fidelity that captures both spatial and temporal variability; 5) extraordinary computational efficiency; 6) applicable in a range of spatial scales; and 7) open-source and well-documented. It can be used to assess variations in water budgets at a variety of spatial scales of interest (e.g., basin, region or globe), with minimum effort, reasonable model credibility and extraordinary computational efficiency.
 
