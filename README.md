@@ -4,6 +4,9 @@
 
 **NOTE**: Please contact the developer Dr. Yaling Liu (<cauliuyaling@gmail.com>) before use and distribution of the Hydrological Emulator (HE), this is to help us track its use among the community and improve its capability according to the user’s needs. Questions and reports on bugs are welcome.
 
+**NOTICE**: This repository uses the Git Large File Storage (LFS) extension (see https://git-lfs.github.com/ for details).  Please run the following command before cloning if you do not already have Git LFS installed:
+`git lfs install`
+
 **Table of Contents**
 
 1\. Overview of the HE
